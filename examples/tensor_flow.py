@@ -7,7 +7,7 @@ from tensorflow.keras.datasets import mnist
 (train_images, train_labels), (test_images, test_labels) = mnist.load_data()
 
 print(train_labels)
-'''
+
 
 # Preprocess the data: flatten the images and normalize the pixel values
 train_images = train_images.reshape((train_images.shape[0], 28 * 28)).astype('float32') / 255
@@ -28,5 +28,5 @@ model.fit(train_images, train_labels, epochs=5)
 # Evaluate the model
 test_loss, test_acc = model.evaluate(test_images, test_labels)
 print(f"Test accuracy: {test_acc}")
-
+'''
 '''
