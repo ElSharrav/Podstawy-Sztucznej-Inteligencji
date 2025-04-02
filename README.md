@@ -14,8 +14,8 @@ Skrypt `cleandata.py` służy do czyszczenia oraz wstępnego przetwarzania danyc
 Następnie zapisuje zmienione pliki pod nazwami clean_test.csv oraz clean_train.csv.
 
 ### 💻 Kod
-Ważniejsze fragmenty kodu:
--wczytanie danych i usuwanie niepkompletnych utworów
+#### Ważniejsze fragmenty kodu:
+Wczytanie danych i usuwanie niepkompletnych utworów
 ```python
 test_df = pd.read_csv(data_path_test)
 
@@ -23,7 +23,7 @@ test_df = pd.read_csv(data_path_test)
 test_df.dropna(inplace=True)
 
 ```
--Znalezienie i usunięcie utworów z tylułami lub autorami ze znakami spoza ASCII
+Znalezienie i usunięcie utworów z tylułami lub autorami ze znakami spoza ASCII
 ```python
 def is_ascii(s):
     return bool(re.match(r'^[\x00-\x7F]+$', str(s)))
