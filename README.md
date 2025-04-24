@@ -69,3 +69,45 @@ clean_test_df  =  test_df[test_df["Artist  Name"].apply(is_ascii)  &  test_df["T
 ```
 
 Te  same  działania  następnie  czyszczą  plik  train.csv.
+
+W obydwu oczyszczonych plikach, pozostawiono nazwy wykonawców oraz tytuły piosenek w celu lepszej czytelności. Kolumny te nie będą interpretowane przez model AI.
+
+# 3. Wybór i implementacja modelu AI
+
+### 📖 Opis
+
+W celu stworzenia modelu wybrano odpowiednie kolumny z danymi z pliku clean_train.csv stworzonego w poprzednim kamieniu milowym.
+Odrzucono takie kolumny jak: "Artist name", "Track name", "Popularity".
+Następnie przeskalowano dane wejściowe tak aby miały odchylenie standardowe równe jeden, a średnią równą zero, co ma zapewnić równy wkład każdego parametru do modelu.
+
+W kolejnym kroku wydzielono dane wyjściowe, czyli kolumnę "Class" w której przechowywany jest numer oznaczający gatunek muzyczny, są to odpowiednio:
+
+Acoustic/Folk - 0, Alt_Music - 1, Blues - 2, Bollywood - 3, Country - 4, HipHop - 5,Indie Alt - 6, Instrumental - 7,Metal - 8, Pop - 9, Rock - 10
+
+Następnie zbudowano prosty model z trzech warstw sieci neuronowych, przesłano do niego wydzielone wcześniej dane i rozpoczęto jego trening.
+
+### 🔣 Kod
+
+Budowa modelu przebiega następująco
+
+```python
+
+model = Sequential([
+    Dense(64, activation='relu',),
+    Dense(64, activation='relu'),
+    Dense(11, activation='softmax')  
+])
+
+```
+
+Trenowanie modelu wygląda następująco
+
+```python
+
+model.fit(X_train, y_train, epochs=50,
+          validation_data=(X_test, y_test),
+          class_weight=class_weight_dict,
+          callbacks=[early_stop]
+          )
+
+```
