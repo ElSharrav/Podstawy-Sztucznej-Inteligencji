@@ -111,3 +111,49 @@ model.fit(X_train, y_train, epochs=50,
           )
 
 ```
+
+# 4. Ocena wyników modelu i optymalizacja
+
+Poniższy screen przedstawia rozkład predykcji dokonanych przez wytrenowany model.
+
+  ![](data/confusion_matrix.png "Confusion Matrix")
+
+Uwagę przykuwają predykcję dwóch gatunków muzyki: Alt_Music oraz Indie_Alt, otóż model wydaje się w przypadku tych dwóch gatunków zgadywać, nie mogąc się zdecydować który gatunek wybrać, bierze je za każdy inny gatunek po równo.
+Aby zrozumieć skąd takie zachowanie modelu wystarczy spojrzeć na definicję gatunku Alt_Music (dotyczy to także gatunku Indie_Alt):
+
+  ![](data/alt_music.png "Alt music : https://www.merriam-webster.com/dictionary/alternative%20music")
+
+Otóż definicja w słowniku merriam-webster głosi że muzyka alternatywna to taka która jest stworzona przez producenta który jest spoza mainstreamu.
+Oznacza to że muzyka alternatywna może zostać uznana za inny gatunek ponieważ model nie wie co jest w mainstreamie a co nie, wobec czego model nie jest w stanie jednoznacznie rozpoznać na podstawie podanych parametrów, tych dwóch gatunków muzyki ( lub potrzebuje do tego znacznie więcej próbek ).
+
+Istnieją też pary gatunków muzyki które są mylone przez model: Pop -> HipHop, Rock -> Metal.
+
+Ogólnie Model wykazuje dokładność około 40% na danych testowych, jednak odrzucając powyższe przypadki, model radzi sobie całkiem dobrze.
+Należy także wziąźć pod uwagę że nawet ludzie w niektórych przypadkach mają problem określić gatunek muzyczny.
+
+W celu poprawy oceny modelu zwiększano ilość warstw sieci, ilość neuronów w warstwach, ilość epoch, zmniejszano learning rate, oraz dostosowywano batch size, wszystko bezskutecznie, co potwierdza że to dane sprawiają problemy.
+
+# 5. Wdrożenie modelu i monitororwanie
+
+Napisano prosty skrypt konwertujący napisany model do formatu onnx:
+
+```python
+
+import tf2onnx
+import tensorflow as tf
+
+print("Podaj sciezke do modelu AI: ", end="")
+fileName = input()
+
+kerasModel = tf.keras.models.load_model(fileName)
+kerasModel.output_names = ['outputLayer']
+
+spec = (tf.TensorSpec(kerasModel.inputs[0].shape, tf.float32, name="input"),)
+
+onnxModel = tf2onnx.convert.from_keras(kerasModel, output_path="model.onnx", input_signature=spec)
+
+```
+
+Jest to open-sourcowy format który został stworzony z myślą o przenoszeniu modeli AI między różnymi językami programowania i narzędziami.
+
+Następnie zaimportowano ten model do programu w Javie który umożliwia korzystanie z niego użytkownikom.
