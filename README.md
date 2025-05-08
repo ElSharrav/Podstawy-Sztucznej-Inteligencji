@@ -128,7 +128,7 @@ Oznacza to że muzyka alternatywna może zostać uznana za inny gatunek poniewa�
 
 Istnieją też pary gatunków muzyki które są mylone przez model: Pop -> HipHop, Rock -> Metal.
 
-Ogólnie Model wykazuje dokładność około 40% na danych testowych, jednak odrzucając powyższe przypadki, model radzi sobie całkiem dobrze.
+Ogólnie Model wykazuje dokładność około 50% na danych testowych, jednak odrzucając powyższe przypadki, model radzi sobie całkiem dobrze.
 Należy także wziąźć pod uwagę że nawet ludzie w niektórych przypadkach mają problem określić gatunek muzyczny.
 
 W celu poprawy oceny modelu zwiększano ilość warstw sieci, ilość neuronów w warstwach, ilość epoch, zmniejszano learning rate, oraz dostosowywano batch size, wszystko bezskutecznie, co potwierdza że to dane sprawiają problemy.
