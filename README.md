@@ -133,7 +133,7 @@ Należy także wziąźć pod uwagę że nawet ludzie w niektórych przypadkach m
 
 W celu poprawy oceny modelu zwiększano ilość warstw sieci, ilość neuronów w warstwach, ilość epoch, zmniejszano learning rate, oraz dostosowywano batch size, wszystko bezskutecznie, co potwierdza że to dane sprawiają problemy.
 
-# 5. Wdrożenie modelu i monitororwanie
+# 5. Wdrożenie modelu i monitorowanie
 
 Napisano prosty skrypt konwertujący napisany model do formatu onnx:
 
@@ -157,3 +157,12 @@ onnxModel = tf2onnx.convert.from_keras(kerasModel, output_path="model.onnx", inp
 Jest to open-sourcowy format który został stworzony z myślą o przenoszeniu modeli AI między różnymi językami programowania i narzędziami.
 
 Następnie zaimportowano ten model do programu w Javie który umożliwia korzystanie z niego użytkownikom.
+
+Napisany w Javie program został dodany do tego repozytorium jako podmoduł Gita.
+
+Program ten umożliwia wpisanie parametrów na podstawie których przewidziany zostanie gatunek utworu do którego odnoszą się te parametry. Możliwe jest też wylosowanie wartości parametrów.
+W wyniku działania program wypisuje przewidywany gatunek muzyczny oraz pewność z jaką tak uważa wyrażoną w procentach.
+
+Poniżej przedstawiono przykładowe dane wejściowe i wyjściowe w programie implementującym model:
+
+  ![](data/javaImpl.png "Inferencja modelu w Javie")
